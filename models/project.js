@@ -16,10 +16,6 @@ const projectSchema = mongoose.Schema({
     link: {
         type: String,
         default: "#"
-    },
-    created_at: {
-        type: Date,
-        default: Date.now()
     }
 })
 
