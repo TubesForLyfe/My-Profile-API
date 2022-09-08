@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
         if (cache.has("projects")) {
             res.json(cache.get("projects"));
         } else {
-            const project = await Project.find().sort({created_at: -1});
+            const project = await Project.find().sort({_id: -1});
             cache.set("projects", project);
             res.json(project);
         }
