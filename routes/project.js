@@ -1,6 +1,6 @@
 const express = require('express');
 const Cache = require('node-cache');
-const Project = require('../models/Project');
+const Project = require('../models/project');
 
 const router = express.Router();
 const cache = new Cache({stdTTL: 10});
