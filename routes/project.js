@@ -7,10 +7,11 @@ const cache = new Cache({stdTTL: 10});
 
 // CREATE
 router.post('/', async (req, res) => {
+    const image_path = "/projects/" + req.body.image_path
     const projectPost = new Project({
         title: req.body.title,
         description: req.body.description,
-        image_path: req.body.image_path,
+        image_path: image_path,
         link: req.body.link
     });
 
