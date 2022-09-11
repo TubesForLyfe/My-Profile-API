@@ -12,9 +12,11 @@ app.use(cors());
 
 // import routes
 const projectRoutes = require('./routes/project');
+const workExperienceRoutes = require('./routes/work_experience');
 
 // routes
 app.use('/project', projectRoutes);
+app.use('/work-experience', workExperienceRoutes);
 
 // connect to MongoDB
 async function connectMongoDB() {

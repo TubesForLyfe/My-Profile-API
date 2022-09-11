@@ -1,6 +1,6 @@
 const express = require('express');
 const Cache = require('node-cache');
-const Project = require('../models/project');
+const WorkExperience = require('../models/work_experience');
 require('dotenv').config();
 
 const router = express.Router();
@@ -9,16 +9,17 @@ const cache = new Cache({stdTTL: 10});
 // CREATE
 router.post('/', async (req, res) => {
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer") && req.headers.authorization.split(' ')[1] === process.env.AUTH_KEY) {
-        const projectPost = new Project({
-            title: req.body.title,
-            description: req.body.description,
-            image_path: "/projects/" + req.body.image_path,
-            link: req.body.link
+        const workExperiencePost = new WorkExperience({
+            from: req.body.from,
+            to: req.body.to,
+            job_position: req.body.job_position,
+            company: req.body.company,
+            description: req.body.description
         });
 
         try {
-            const project = await projectPost.save();
-            res.json(project);
+            const workExperience = await workExperiencePost.save();
+            res.json(workExperience);
         } catch (err) {
             res.json({message: err});
         }
@@ -31,12 +32,12 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer") && req.headers.authorization.split(' ')[1] === process.env.AUTH_KEY) {
         try {
-            if (cache.has("projects")) {
-                res.json(cache.get("projects"));
+            if (cache.has("work_experiences")) {
+                res.json(cache.get("work_experiences"));
             } else {
-                const project = await Project.find().sort({_id: -1});
-                cache.set("projects", project);
-                res.json(project);
+                const workExperience = await WorkExperience.find().sort({_id: -1});
+                cache.set("work_experiences", workExperience);
+                res.json(workExperience);
             }
         } catch (err) {
             res.json({message: err});
@@ -47,16 +48,17 @@ router.get('/', async (req, res) => {
 });
 
 // UPDATE
-router.put('/:projectId', async (req, res) => {
+router.put('/:workExperienceId', async (req, res) => {
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer") && req.headers.authorization.split(' ')[1] === process.env.AUTH_KEY) {
         try {
-            const projectUpdate = await Project.updateOne({_id: req.params.projectId}, {
-                title: req.body.title,
-                description: req.body.description,
-                image_path: req.body.image_path,
-                link: req.body.link
+            const workExperienceUpdate = await WorkExperience.updateOne({_id: req.params.workExperienceId}, {
+                from: req.body.from,
+                to: req.body.to,
+                job_position: req.body.job_position,
+                company: req.body.company,
+                description: req.body.description
             });
-            res.json(projectUpdate);
+            res.json(workExperienceUpdate);
         } catch (err) {
             res.json({message: err});
         }
@@ -66,11 +68,11 @@ router.put('/:projectId', async (req, res) => {
 });
 
 // DELETE
-router.delete('/:projectId', async (req, res) => {
+router.delete('/:workExperienceId', async (req, res) => {
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer") && req.headers.authorization.split(' ')[1] === process.env.AUTH_KEY) {
         try {
-            const projectUpdate = await Project.deleteOne({_id: req.params.projectId});
-            res.json(projectUpdate);
+            const workExperienceUpdate = await WorkExperience.deleteOne({_id: req.params.workExperienceId});
+            res.json(workExperienceUpdate);
         } catch (err) {
             res.json({message: err});
         }
