@@ -14,7 +14,8 @@ router.post('/', async (req, res) => {
             to: req.body.to,
             job_position: req.body.job_position,
             company: req.body.company,
-            description: req.body.description
+            description: req.body.description,
+            sequence: req.body.sequence
         });
 
         try {
@@ -35,7 +36,7 @@ router.get('/', async (req, res) => {
             if (cache.has("work_experiences")) {
                 res.json(cache.get("work_experiences"));
             } else {
-                const workExperience = await WorkExperience.find().sort({_id: -1});
+                const workExperience = await WorkExperience.find().sort({sequence: -1});
                 cache.set("work_experiences", workExperience);
                 res.json(workExperience);
             }
@@ -56,7 +57,8 @@ router.put('/:workExperienceId', async (req, res) => {
                 to: req.body.to,
                 job_position: req.body.job_position,
                 company: req.body.company,
-                description: req.body.description
+                description: req.body.description,
+                sequence: req.body.sequence
             });
             res.json(workExperienceUpdate);
         } catch (err) {

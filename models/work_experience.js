@@ -20,6 +20,10 @@ const workExperienceSchema = mongoose.Schema({
     description: {
         type: String,
         required: true
+    },
+    sequence: {
+        type: Number,
+        default: 0
     }
 })
 

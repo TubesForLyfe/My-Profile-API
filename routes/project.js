@@ -13,7 +13,8 @@ router.post('/', async (req, res) => {
             title: req.body.title,
             description: req.body.description,
             image_path: "/projects/" + req.body.image_path,
-            link: req.body.link
+            link: req.body.link,
+            sequence: req.body.sequence
         });
 
         try {
@@ -34,7 +35,7 @@ router.get('/', async (req, res) => {
             if (cache.has("projects")) {
                 res.json(cache.get("projects"));
             } else {
-                const project = await Project.find().sort({_id: -1});
+                const project = await Project.find().sort({sequence: -1});
                 cache.set("projects", project);
                 res.json(project);
             }
@@ -53,8 +54,9 @@ router.put('/:projectId', async (req, res) => {
             const projectUpdate = await Project.updateOne({_id: req.params.projectId}, {
                 title: req.body.title,
                 description: req.body.description,
-                image_path: req.body.image_path,
-                link: req.body.link
+                image_path: "/projects/" + req.body.image_path,
+                link: req.body.link,
+                sequence: req.body.sequence
             });
             res.json(projectUpdate);
         } catch (err) {

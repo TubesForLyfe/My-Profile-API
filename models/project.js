@@ -14,8 +14,11 @@ const projectSchema = mongoose.Schema({
         required: true
     },
     link: {
-        type: String,
-        default: "#"
+        type: String
+    },
+    sequence: {
+        type: Number,
+        default: 0
     }
 })
 
