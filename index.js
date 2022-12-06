@@ -28,7 +28,7 @@ async function connectMongoDB() {
     }
 }
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 3000, () => {
     connectMongoDB();
     console.log(`Server is running on port ${process.env.PORT}`)
 })
