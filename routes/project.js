@@ -32,13 +32,13 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     // if (req.headers.authorization && req.headers.authorization.startsWith("Bearer") && req.headers.authorization.split(' ')[1] === process.env.AUTH_KEY) {
         try {
-            if (cache.has("projects")) {
-                res.json(cache.get("projects"));
-            } else {
+            // if (cache.has("projects")) {
+            //     res.json(cache.get("projects"));
+            // } else {
                 const project = await Project.find().sort({sequence: -1});
                 cache.set("projects", project);
                 res.json(project);
-            }
+            // }
         } catch (err) {
             res.json({message: err});
         }
