@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
 
 // READ
 router.get('/', async (req, res) => {
-    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer") && req.headers.authorization.split(' ')[1] === process.env.AUTH_KEY) {
+    // if (req.headers.authorization && req.headers.authorization.startsWith("Bearer") && req.headers.authorization.split(' ')[1] === process.env.AUTH_KEY) {
         try {
             if (cache.has("projects")) {
                 res.json(cache.get("projects"));
@@ -42,9 +42,9 @@ router.get('/', async (req, res) => {
         } catch (err) {
             res.json({message: err});
         }
-    } else {
-        res.json({message: "Not Authorized"});
-    }
+    // } else {
+    //     res.json({message: "Not Authorized"});
+    // }
 });
 
 // UPDATE
